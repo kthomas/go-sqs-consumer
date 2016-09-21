@@ -22,14 +22,12 @@ func Consume(queueUrl string, handlerFunc HandlerFunc) {
 		svc := sqs.New(session.New())
 
 		params := &sqs.ReceiveMessageInput{
-			QueueUrl:            aws.String(url),
-			AttributeNames:      []*string{},
-			MaxNumberOfMessages: aws.Int64(1),
-			MessageAttributeNames: []*string{
-				aws.String(".*"),
-			},
-			VisibilityTimeout: aws.Int64(20),
-			WaitTimeSeconds:   aws.Int64(10),
+			QueueUrl:		aws.String(url),
+			AttributeNames:		[]*string{},
+			MaxNumberOfMessages: 	aws.Int64(1),
+			MessageAttributeNames:	[]*string{ aws.String(".*"), },
+			VisibilityTimeout:	aws.Int64(20),
+			WaitTimeSeconds:   	aws.Int64(10),
 		}
 
 		for {

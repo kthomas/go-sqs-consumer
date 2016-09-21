@@ -3,6 +3,7 @@ package sqs
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -19,7 +20,14 @@ type Message struct {
 
 func Consume(queueUrl string, handlerFunc HandlerFunc) {
 	go func(url string) {
-		svc := sqs.New(session.New())
+		var region string
+		if os.Getenv("AWS_REGION") != "" {
+			region = os.Getenv("AWS_REGION")
+		} else {
+			region = "us-east-1"
+		}
+
+		svc := sqs.New(session.New(), aws.NewConfig().WithRegion(region))
 
 		params := &sqs.ReceiveMessageInput{
 			QueueUrl:		aws.String(url),

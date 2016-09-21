@@ -14,8 +14,8 @@ import (
 type HandlerFunc func(message *Message)
 
 type Message struct {
-	Event   string
-	Payload map[string]interface{}
+	Event   	string			`json:"event"`
+	Payload 	map[string]interface{}	`json:"payload"`
 }
 
 func Consume(queueUrl string, handlerFunc HandlerFunc) {
